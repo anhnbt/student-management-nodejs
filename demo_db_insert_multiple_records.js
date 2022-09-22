@@ -8,10 +8,10 @@ const conn = mysql.createConnection({
 });
 
 const values = [
-    ['Son', 59],
-    ['Chien', 57]
+    ['Tuấn Anh', 27],
+    ['Khoai Tây', 3]
 ]
-conn.query('INSERT INTO students (hovaten, tuoi) VALUES ?', [values], (err, result) => {
+conn.query('INSERT INTO sinhvien (hovaten, tuoi) VALUES ?', [values], (err, result) => {
     if (err) throw err;
     console.log('Number of records inserted ' + result.affectedRows);
 });
