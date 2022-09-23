@@ -1,9 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 const mysql = require('mysql');
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors({
+    origin: '*'
+}));
 
 const conn = mysql.createConnection({
     host: 'localhost',
@@ -18,7 +22,7 @@ conn.connect((err) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('Welcome to api!');
 });
 
 app.get('/api/sinhvien', (req, res) => {
@@ -51,6 +55,7 @@ app.post('/api/sinhvien', (req, res) => {
         if (err) {
             res.status(500).send('Internal Server Error ' + err.message);
         } else {
+            sinhvien.id = result.insertId;
             res.status(201).send(sinhvien);
         }
     });
@@ -90,6 +95,7 @@ app.delete('/api/sinhvien/:id', (req, res) => {
     })
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+const server = app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}/api`);
 });
+server.on('error', console.error);
